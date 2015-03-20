@@ -9,22 +9,28 @@
   'use strict';
 
   /**
-   * Name of the plugin
-   * @private
-   */
-  var pluginName = 'mentionify',
-
-  /**
    * Default settings
    * @private
    */
-  defaults = {
+  var defaults = {
     matchCase: true,
     minChars: 1,
     keyDelay: 400,
     userHighlight: true,
     queryParam: 'key'
   },
+
+  keyCodes = {
+    backspace: 8,
+    shift: 16,
+    enter: 13,
+    ctrl: 17,
+    alt: 18,
+    down: 40,
+    esc: 27,
+    del: 46,
+    up: 38
+  };
 
   /**
    * Mentionify constructor
@@ -33,7 +39,32 @@
    * @constructor
    */
   function Mentionify(element, options) {
-    // @TODO
+    this.$element = $(element);
+    this.settings = $.extend({}, defaults, options);
+    this.init();
+  }
+
+  /**
+   * Initialization
+   * @public
+   */
+  Mentionify.prototype.init = function() {
+    this.$element.keyUp(this.onKeyUp);
+    return this;
+  };
+
+
+  /**
+   * Event Handler
+   * @param {event} event
+   * @public
+   */
+  Mentionify.prototype.onKeyUp = function(event) {
+    var allowedKeys = [keyCodes.enter, keyCodes.shift, keyCodes.ctrl];
+
+    if(allowedKeys.indexOf(event.keyCode) > -1) {
+      // @TODO
+    }
   };
 
   /**
@@ -55,7 +86,7 @@
 
       // Create the plugin instance
       instance = new Mentionify(this, options);
-      instance.index = $mentionify.lookup.push(instance) - 1;
+      instance.index = $.mentionify.lookup.push(instance) - 1;
       $.data(this, 'mentionify', instance);
     });
 
