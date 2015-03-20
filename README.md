@@ -17,7 +17,7 @@ In your web page:
 <script src="dist/mentionify.min.js"></script>
 <script>
   jQuery(function ($) {
-    $.awesome(); // "awesome"
+    $('textarea').mentionify(); // "initialize the textarea"
   });
 </script>
 ```
